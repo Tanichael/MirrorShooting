@@ -97,7 +97,7 @@ public class MazePlayer : NetworkBehaviour
     {
         GameObject bulletObject = Instantiate(_bullet, _launchPosition.transform);
         bulletObject.transform.localPosition = new Vector3(0f, 0f, 0f);
-        NetworkServer.Spawn(bulletObject);
+        // NetworkServer.Spawn(bulletObject);
         bulletObject.transform.SetParent(null);
         
         Vector3 shootDirection = Vector3.Normalize(_launchPosition.transform.position - gameObject.transform.position);
