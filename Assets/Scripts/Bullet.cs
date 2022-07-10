@@ -36,6 +36,7 @@ public class Bullet : NetworkBehaviour
     {
         //シューターの設定
         _shooter = connId;
+        Debug.Log("shooter: " + connId);
         
         //寿命の設定
         Destroy(gameObject, _lifeTime);
