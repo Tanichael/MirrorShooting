@@ -89,7 +89,15 @@ public class MazePlayer : NetworkBehaviour
     [Command]
     void CmdShoot()
     {
-        RpcShoot();
+        GameObject bulletObject = Instantiate(_bullet, _launchPosition.transform);
+        bulletObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+        bulletObject.transform.SetParent(null);
+        NetworkServer.Spawn(bulletObject);
+        
+        Vector3 shootDirection = Vector3.Normalize(_launchPosition.transform.position - gameObject.transform.position);
+        Bullet bullet = bulletObject.GetComponent<Bullet>();
+        bullet.Shoot(_connId, shootDirection);
+        // RpcShoot();
     }
 
     [ClientRpc]
