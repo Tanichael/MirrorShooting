@@ -34,13 +34,6 @@ public class MazePlayer : NetworkBehaviour
         transform.LookAt(new Vector3(0f, 1f, 0f));
         
         CmdSetUpPlayer();
-
-        Container.Instance.OnBulletHit.Subscribe(bulletHitMessage =>
-        {
-            Debug.Log("Shooter: " + bulletHitMessage.Shooter);
-            Debug.Log("Shot: " + bulletHitMessage.Shot);
-            Debug.Log("Damage: " + bulletHitMessage.Damage);
-        });
     }
 
     void Update()

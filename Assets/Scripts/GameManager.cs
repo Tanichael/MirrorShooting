@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
+using UniRx;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void OnStartServer()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Container.Instance.OnBulletHit.Subscribe(bulletHitMessage =>
+        {
+            Debug.Log("Shooter: " + bulletHitMessage.Shooter);
+            Debug.Log("Shot: " + bulletHitMessage.Shot);
+            Debug.Log("Damage: " + bulletHitMessage.Damage);
+        });
     }
 }

@@ -10,6 +10,7 @@ using UniRx.Triggers;
 
 public class Bullet : NetworkBehaviour
 {
+    [SyncVar]
     private int _shooter;
 
     private readonly float _lifeTime = 10f; //球の寿命
@@ -26,12 +27,6 @@ public class Bullet : NetworkBehaviour
     
     private readonly float _speed = 10f;
 
-    public int Shooter
-    {
-        get => _shooter;
-        set => _shooter = value;
-    }
-    
     public void Shoot(int connId, Vector3 shootDirection)
     {
         //シューターの設定
@@ -51,19 +46,27 @@ public class Bullet : NetworkBehaviour
     [ServerCallback]
     public void OnTriggerEnter(Collider other)
     {   
+        Debug.Log(other.gameObject.name);
+
         MazePlayer mazePlayer = other.gameObject.GetComponent<MazePlayer>();
         if (mazePlayer != null)
         {
             int shot = mazePlayer.connectionToClient.connectionId;
             if (shot == _shooter) return; //自爆はしない
             
-            Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(
-                _shooter,
-                mazePlayer.connectionToClient.connectionId,
-                10
-            ));
-            Debug.Log(mazePlayer.gameObject.name);
+            // Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(
+            //     _shooter,
+            //     mazePlayer.connectionToClient.connectionId,
+            //     10
+            // ));
+            // Debug.Log(mazePlayer.gameObject.name);
         }
+        
+        Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(
+            _shooter,
+            -1,
+            10
+        ));
     }
 }
 
