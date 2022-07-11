@@ -20,6 +20,7 @@ public class MazePlayer : NetworkBehaviour
     private readonly float _coolTime = 1f;
     private readonly float _hitPoint = 100f;
     
+    [SyncVar]
     private int _connId = -1;
     
     public override void OnStartLocalPlayer()
