@@ -51,7 +51,7 @@ public class MazePlayer : NetworkBehaviour
         Camera.main.transform.localPosition = new Vector3(0, 0, 0);
         transform.LookAt(new Vector3(0f, 1f, 0f));
         
-        CmdSetUpPlayer();
+        CmdSetUpPlayer(PlayerInfo.Instance.PlayerName);
     }
 
     void Update()
@@ -91,11 +91,11 @@ public class MazePlayer : NetworkBehaviour
     }
 
     [Command]
-    void CmdSetUpPlayer()
+    void CmdSetUpPlayer(string playerName)
     {
         //コネクションを記録
         _netIdentity = netIdentity;
-        _playerName = PlayerInfo.Instance.PlayerName;
+        _playerName = playerName;
         _hitPoint = 100f;
         
         Container.Instance.ChangeInfoPublisher.OnNext(new ChangeInfoMessage(
