@@ -13,16 +13,20 @@ public class MazePlayer : NetworkBehaviour
     [SerializeField] private GameObject _bullet;
     
     //サーバーとクライアントで共有しておきたい変数
-    [SyncVar]
-    private NetworkIdentity _netIdentity;
+    [SyncVar] private NetworkIdentity _netIdentity;
 
     public NetworkIdentity NetIdentity
     {
         get => _netIdentity;
     }
 
-    [SyncVar]
-    private float _hitPoint = 100f;
+    [SyncVar] private string _playerName;
+    public string PlayerName
+    {
+        get => _playerName;
+    }
+
+    [SyncVar] private float _hitPoint = 100f;
 
     public float HitPoint
     {
@@ -89,10 +93,11 @@ public class MazePlayer : NetworkBehaviour
     void CmdSetUpPlayer()
     {
         //コネクションを記録
-        _hitPoint = 100f;
         _netIdentity = netIdentity;
+        _playerName = PlayerInfo.Instance.PlayerName;
+        _hitPoint = 100f;
 
-        Debug.Log("HitPoint: " + _hitPoint + ", NetId: " + netId);
+        Debug.Log("NetId: " + netId + ", PlayerName: " + _playerName + ", HitPoint: " + _hitPoint);
     }
     
     [Command]
