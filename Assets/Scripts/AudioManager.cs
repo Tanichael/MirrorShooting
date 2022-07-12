@@ -19,6 +19,7 @@ public class AudioManager : NetworkBehaviour
         Container.Instance.OnBulletHit.Subscribe(bulletHitMessage =>
         {
             RpcHitAudio(bulletHitMessage.ShooterIdentity.connectionToClient);
+            RpcHitAudio(bulletHitMessage.ShotIdentity.connectionToClient);
         });
     }
 

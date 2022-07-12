@@ -21,7 +21,7 @@ public class NameSceneManager : MonoBehaviour
                 return;
             }
             PlayerInfo.Instance.SetName(_inputField.text);
-            // SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("RoomScene");
         });
     }
 }

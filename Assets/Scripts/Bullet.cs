@@ -14,7 +14,7 @@ public class Bullet : NetworkBehaviour
     private bool _isShot = false;
 
     private readonly float _lifeTime = 10f; //球の寿命
-    private readonly float _speed = 10f;
+    private readonly float _speed = 30f;
 
     public override void OnStartServer()
     {
