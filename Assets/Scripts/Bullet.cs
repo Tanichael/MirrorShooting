@@ -12,9 +12,33 @@ public class Bullet : NetworkBehaviour
 {
     private IObserver<BulletHitMessage> _bulletHitSubject;
     private NetworkIdentity _shooterIdentity;
+    private bool _isShot = false;
 
     private readonly float _lifeTime = 10f; //球の寿命
     private readonly float _speed = 10f;
+
+    public override void OnStartServer()
+    {
+        Container.Instance.OnBulletShoot.Subscribe(bulletShootMessage =>
+        {
+            //すでにメッセージを一度受け取っていたらreturn
+            if (_isShot) return;
+            _isShot = true;
+            
+            //シューターの設定
+            _shooterIdentity = bulletShootMessage.ShooterIdentity;
+            Debug.Log("shooter: " + _shooterIdentity.connectionToClient.connectionId);
+        
+            //寿命の設定
+            Destroy(gameObject, _lifeTime);
+
+            this.UpdateAsObservable()
+                .Subscribe(_ =>
+                {
+                    gameObject.transform.position += bulletShootMessage.ShootDirection * _speed * Time.deltaTime;
+                });
+        });
+    }
 
     public void Shoot(NetworkIdentity playerIdentity, Vector3 shootDirection)
     {
@@ -58,11 +82,23 @@ public class Bullet : NetworkBehaviour
     }
 }
 
+public class BulletShootMessage
+{
+    public NetworkIdentity ShooterIdentity { get; }
+    public Vector3 ShootDirection { get; }
+
+    public BulletShootMessage(NetworkIdentity shooterIdentity, Vector3 shootDirection)
+    {
+        ShooterIdentity = shooterIdentity;
+        ShootDirection = shootDirection;
+    }
+}
+
 public class BulletHitMessage
 {
-    public NetworkIdentity ShooterIdentity;
-    public NetworkIdentity ShotIdentity;
-    public float Damage;
+    public NetworkIdentity ShooterIdentity { get; }
+    public NetworkIdentity ShotIdentity { get;  }
+    public float Damage { get; }
 
     public BulletHitMessage(NetworkIdentity shooterIdentity, NetworkIdentity shotIdentity, int damage)
     {

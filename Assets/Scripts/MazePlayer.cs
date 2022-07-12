@@ -105,7 +105,11 @@ public class MazePlayer : NetworkBehaviour
         
         Vector3 shootDirection = Vector3.Normalize(_launchPosition.transform.position - gameObject.transform.position);
         Bullet bullet = bulletObject.GetComponent<Bullet>();
-        bullet.Shoot(_netIdentity, shootDirection);
+        
+        Container.Instance.BulletShootPublisher.OnNext(new BulletShootMessage(
+                _netIdentity,
+                shootDirection
+            ));
         // RpcShoot();
     }
 
