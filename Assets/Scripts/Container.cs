@@ -11,7 +11,8 @@ public class Container : Singleton<Container>
 {
     private Subject<BulletShootMessage> _bulletShootMessageSubject;
     private Subject<BulletHitMessage> _bulletHitMessageSubject;
-    
+    private Subject<ChangeInfoMessage> _changeInfoSubject;
+
     public IObserver<BulletShootMessage> BulletShootPublisher
     {
         get
@@ -44,12 +45,28 @@ public class Container : Singleton<Container>
             return _bulletHitMessageSubject;
         }
     }
+    
+    public IObserver<ChangeInfoMessage> ChangeInfoPublisher
+    {
+        get
+        {
+            return _changeInfoSubject;
+        }
+    }
+
+    public IObservable<ChangeInfoMessage> OnChangeInfo
+    {
+        get
+        {
+            return _changeInfoSubject;
+        }
+    }
 
     public Container()
     {
         //コンストラクターで各Subjectのインスタンス作っておく
         _bulletHitMessageSubject = new Subject<BulletHitMessage>();
         _bulletShootMessageSubject = new Subject<BulletShootMessage>();
-
+        _changeInfoSubject = new Subject<ChangeInfoMessage>();
     }
 }

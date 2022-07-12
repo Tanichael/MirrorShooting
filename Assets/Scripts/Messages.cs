@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using Mirror.Examples.Pong;
 
 public class BulletShootMessage
 {
@@ -28,5 +29,19 @@ public class BulletHitMessage
         ShooterIdentity = shooterIdentity;
         ShotIdentity = shotIdentity;
         Damage = damage;
+    }
+}
+
+public class ChangeInfoMessage
+{
+    public NetworkIdentity PlayerIdentity { get; }
+    public string PlayerName { get; }
+    public float HitPoint { get; }
+
+    public ChangeInfoMessage(NetworkIdentity playerIdentity, string playerName, float hitPoint)
+    {
+        PlayerIdentity = playerIdentity;
+        PlayerName = playerName;
+        HitPoint = hitPoint;
     }
 }

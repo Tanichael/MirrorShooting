@@ -25,6 +25,12 @@ public class GameManager : NetworkBehaviour
             if (mazePlayer != null)
             {
                 mazePlayer.HitPoint -= bulletHitMessage.Damage;
+                Container.Instance.ChangeInfoPublisher.OnNext(new ChangeInfoMessage(
+                        mazePlayer.netIdentity,
+                        mazePlayer.PlayerName,
+                        mazePlayer.HitPoint
+                    ));
+                
                 Debug.Log("Id: " + bulletHitMessage.ShotIdentity.connectionToClient.connectionId +  ", HitPoint: " + mazePlayer.HitPoint);
             }
             

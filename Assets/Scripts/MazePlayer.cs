@@ -77,7 +77,8 @@ public class MazePlayer : NetworkBehaviour
                 CmdShoot();
             }
         }
-
+        
+        //クールタイム処理
         if (_isShooting)
         {
             _lapseTime += Time.deltaTime;
@@ -96,6 +97,12 @@ public class MazePlayer : NetworkBehaviour
         _netIdentity = netIdentity;
         _playerName = PlayerInfo.Instance.PlayerName;
         _hitPoint = 100f;
+        
+        Container.Instance.ChangeInfoPublisher.OnNext(new ChangeInfoMessage(
+                _netIdentity,
+                _playerName,
+                _hitPoint
+            ));
 
         Debug.Log("NetId: " + netId + ", PlayerName: " + _playerName + ", HitPoint: " + _hitPoint);
     }
