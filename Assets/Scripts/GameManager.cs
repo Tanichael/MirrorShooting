@@ -14,8 +14,10 @@ public class GameManager : NetworkBehaviour
         //衝突時の処理
         Container.Instance.OnBulletHit.Subscribe(bulletHitMessage =>
         {
-            //HP処理
+            //当たった先がプレイヤーじゃないときは何もしない
+            if (bulletHitMessage.ShooterIdentity == bulletHitMessage.ShotIdentity) return;
             
+            //HP処理
             //プレーヤー取得処理
             //MazePlayerを取得してHitPointを減らす処理が必要
             GameObject playerObject = bulletHitMessage.ShotIdentity.gameObject;

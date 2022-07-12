@@ -58,7 +58,7 @@ public class Bullet : NetworkBehaviour
         
         Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(
             _shooterIdentity,
-            null,
+            _shooterIdentity,
             10
         ));
         Destroy(gameObject);
