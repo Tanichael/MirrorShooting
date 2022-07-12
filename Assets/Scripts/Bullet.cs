@@ -10,7 +10,6 @@ using UniRx.Triggers;
 
 public class Bullet : NetworkBehaviour
 {
-    private IObserver<BulletHitMessage> _bulletHitSubject;
     private NetworkIdentity _shooterIdentity;
     private bool _isShot = false;
 
@@ -72,7 +71,7 @@ public class Bullet : NetworkBehaviour
             // ));
             // Debug.Log(mazePlayer.gameObject.name);
         }
-
+        
         Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(
             _shooterIdentity,
             _shooterIdentity,
@@ -82,28 +81,3 @@ public class Bullet : NetworkBehaviour
     }
 }
 
-public class BulletShootMessage
-{
-    public NetworkIdentity ShooterIdentity { get; }
-    public Vector3 ShootDirection { get; }
-
-    public BulletShootMessage(NetworkIdentity shooterIdentity, Vector3 shootDirection)
-    {
-        ShooterIdentity = shooterIdentity;
-        ShootDirection = shootDirection;
-    }
-}
-
-public class BulletHitMessage
-{
-    public NetworkIdentity ShooterIdentity { get; }
-    public NetworkIdentity ShotIdentity { get;  }
-    public float Damage { get; }
-
-    public BulletHitMessage(NetworkIdentity shooterIdentity, NetworkIdentity shotIdentity, int damage)
-    {
-        ShooterIdentity = shooterIdentity;
-        ShotIdentity = shotIdentity;
-        Damage = damage;
-    }
-}
