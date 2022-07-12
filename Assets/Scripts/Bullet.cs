@@ -49,7 +49,7 @@ public class Bullet : NetworkBehaviour
             
             Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(
                 _shooterIdentity,
-                _shooterIdentity,
+                shotIdentity,
                 10
             ));
             Destroy(gameObject);
