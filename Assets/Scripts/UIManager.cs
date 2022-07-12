@@ -15,8 +15,8 @@ public class UIManager : NetworkBehaviour
     {
         Container.Instance.OnChangeInfo.Subscribe(changeInfoMessage =>
         {
-            RpcChangeUI(changeInfoMessage.PlayerName, changeInfoMessage.HitPoint.ToString());
-            // TRpcChangeUI(changeInfoMessage.PlayerIdentity.connectionToClient, changeInfoMessage.PlayerName, changeInfoMessage.HitPoint.ToString());
+            // RpcChangeUI(changeInfoMessage.PlayerName, changeInfoMessage.HitPoint.ToString());
+            TRpcChangeUI(changeInfoMessage.PlayerIdentity.connectionToClient, changeInfoMessage.PlayerName, changeInfoMessage.HitPoint.ToString());
         });
     }
 
