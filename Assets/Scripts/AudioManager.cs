@@ -11,11 +11,16 @@ public class AudioManager : NetworkBehaviour
 
     public override void OnStartServer()
     {
+  
+    }
+
+    public override void OnStartClient()
+    {
         Container.Instance.OnBulletShoot.Subscribe(bulletShootMessage =>
         {
             _shootBulletAudio.Play();
         });
-        
+
         Container.Instance.OnBulletHit.Subscribe(bulletHitMessage =>
         {
             _hitBulletAudio.Play();

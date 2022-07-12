@@ -15,6 +15,7 @@ public class GameManager : NetworkBehaviour
         Container.Instance.OnBulletHit.Subscribe(bulletHitMessage =>
         {
             //HP処理
+            
             //プレーヤー取得処理
             //MazePlayerを取得してHitPointを減らす処理が必要
             GameObject playerObject = bulletHitMessage.ShooterIdentity.gameObject;
