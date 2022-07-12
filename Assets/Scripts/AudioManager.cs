@@ -11,19 +11,26 @@ public class AudioManager : NetworkBehaviour
 
     public override void OnStartServer()
     {
-  
-    }
-
-    public override void OnStartClient()
-    {
         Container.Instance.OnBulletShoot.Subscribe(bulletShootMessage =>
         {
-            _shootBulletAudio.Play();
+            RpcShootAudio();
         });
 
         Container.Instance.OnBulletHit.Subscribe(bulletHitMessage =>
         {
-            _hitBulletAudio.Play();
+            RpcHitAudio(bulletHitMessage.ShooterIdentity.connectionToClient);
         });
+    }
+
+    [ClientRpc]
+    public void RpcShootAudio()
+    {
+        _shootBulletAudio.Play();
+    }
+
+    [TargetRpc]
+    public void RpcHitAudio(NetworkConnection target)
+    {
+        _hitBulletAudio.Play();
     }
 }
