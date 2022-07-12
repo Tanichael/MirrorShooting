@@ -12,16 +12,30 @@ public class MazePlayer : NetworkBehaviour
     [SerializeField] private GameObject _launchPosition;
     [SerializeField] private GameObject _bullet;
     
-    private IInputProvider _inputProvider;
-    
+    //サーバーとクライアントで共有しておきたい変数
+    [SyncVar]
+    private NetworkIdentity _netIdentity;
+
+    public NetworkIdentity NetIdentity
+    {
+        get => _netIdentity;
+    }
+
+    [SyncVar]
+    private float _hitPoint = 100f;
+
+    public float HitPoint
+    {
+        get => _hitPoint;
+        set => _hitPoint = value;
+    }
+   
+    //ローカルプレイヤー用の変数 入力受付の際に使う
     //Weaponクラスを用意してもいい
+    private IInputProvider _inputProvider;
     private bool _isShooting;
     private float _lapseTime = 0f;
     private readonly float _coolTime = 1f;
-    private readonly float _hitPoint = 100f;
-    
-    [SyncVar]
-    private int _connId = -1;
     
     public override void OnStartLocalPlayer()
     {
@@ -75,8 +89,10 @@ public class MazePlayer : NetworkBehaviour
     void CmdSetUpPlayer()
     {
         //コネクションを記録
-        _connId = connectionToClient.connectionId;
-        Debug.Log("ID: " + _connId);
+        _hitPoint = 100f;
+        _netIdentity = netIdentity;
+
+        Debug.Log("HitPoint: " + _hitPoint + ", NetId: " + netId);
     }
     
     [Command]
@@ -89,7 +105,7 @@ public class MazePlayer : NetworkBehaviour
         
         Vector3 shootDirection = Vector3.Normalize(_launchPosition.transform.position - gameObject.transform.position);
         Bullet bullet = bulletObject.GetComponent<Bullet>();
-        bullet.Shoot(_connId, shootDirection);
+        bullet.Shoot(_netIdentity, shootDirection);
         // RpcShoot();
     }
 
@@ -102,7 +118,7 @@ public class MazePlayer : NetworkBehaviour
         
         Vector3 shootDirection = Vector3.Normalize(_launchPosition.transform.position - gameObject.transform.position);
         Bullet bullet = bulletObject.GetComponent<Bullet>();
-        bullet.Shoot(_connId, shootDirection);
+        bullet.Shoot(_netIdentity, shootDirection);
     }
     
     

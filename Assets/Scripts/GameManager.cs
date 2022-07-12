@@ -6,12 +6,26 @@ using UniRx;
 
 public class GameManager : NetworkBehaviour
 {
+    //サーバーで動かしたい処理を登録しておく
     public override void OnStartServer()
     {
+        //衝突時の処理
         Container.Instance.OnBulletHit.Subscribe(bulletHitMessage =>
         {
-            Debug.Log("Shooter: " + bulletHitMessage.Shooter);
-            Debug.Log("Shot: " + bulletHitMessage.Shot);
+            //HP処理
+            //プレーヤー取得処理
+            //MazePlayerを取得してHitPointを減らす処理が必要
+            GameObject playerObject = bulletHitMessage.ShooterIdentity.gameObject;
+            MazePlayer mazePlayer = playerObject.GetComponent<MazePlayer>();
+            if (mazePlayer != null)
+            {
+                mazePlayer.HitPoint -= bulletHitMessage.Damage;
+            }
+            
+            //UI表示処理 誰が誰を倒した、みたいなの
+            
+            Debug.Log("Shooter: " + bulletHitMessage.ShooterIdentity);
+            Debug.Log("Shot: " + bulletHitMessage.ShotIdentity);
             Debug.Log("Damage: " + bulletHitMessage.Damage);
         });
     }

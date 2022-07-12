@@ -10,8 +10,7 @@ using UniRx.Triggers;
 
 public class Bullet : NetworkBehaviour
 {
-    [SyncVar]
-    private int _shooter;
+    private NetworkIdentity _shooterIdentity;
 
     private readonly float _lifeTime = 10f; //球の寿命
 
@@ -27,11 +26,11 @@ public class Bullet : NetworkBehaviour
     
     private readonly float _speed = 10f;
 
-    public void Shoot(int connId, Vector3 shootDirection)
+    public void Shoot(NetworkIdentity playerIdentity, Vector3 shootDirection)
     {
         //シューターの設定
-        _shooter = connId;
-        Debug.Log("shooter: " + connId);
+        _shooterIdentity = playerIdentity;
+        Debug.Log("shooter: " + _shooterIdentity.connectionToClient.connectionId);
         
         //寿命の設定
         Destroy(gameObject, _lifeTime);
@@ -45,14 +44,12 @@ public class Bullet : NetworkBehaviour
 
     [ServerCallback]
     public void OnTriggerEnter(Collider other)
-    {   
-        Debug.Log(other.gameObject.name);
-
+    {
         MazePlayer mazePlayer = other.gameObject.GetComponent<MazePlayer>();
         if (mazePlayer != null)
         {
-            int shot = mazePlayer.connectionToClient.connectionId;
-            if (shot == _shooter) return; //自爆はしない
+            NetworkIdentity shotIdentity = mazePlayer.netIdentity;
+            if (shotIdentity == _shooterIdentity) return; //自爆はしない
             
             // Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(
             //     _shooter,
@@ -61,10 +58,10 @@ public class Bullet : NetworkBehaviour
             // ));
             // Debug.Log(mazePlayer.gameObject.name);
         }
-        
+
         Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(
-            _shooter,
-            -1,
+            _shooterIdentity,
+            _shooterIdentity,
             10
         ));
     }
@@ -72,14 +69,14 @@ public class Bullet : NetworkBehaviour
 
 public class BulletHitMessage
 {
-    public int Shooter;
-    public int Shot;
+    public NetworkIdentity ShooterIdentity;
+    public NetworkIdentity ShotIdentity;
     public float Damage;
 
-    public BulletHitMessage(int shooter, int shot, int damage)
+    public BulletHitMessage(NetworkIdentity shooterIdentity, NetworkIdentity shotIdentity, int damage)
     {
-        Shooter = shooter;
-        Shot = shot;
+        ShooterIdentity = shooterIdentity;
+        ShotIdentity = shotIdentity;
         Damage = damage;
     }
 }
