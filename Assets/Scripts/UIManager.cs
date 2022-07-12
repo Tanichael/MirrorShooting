@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UniRx;
 
 public class UIManager : NetworkBehaviour
 {
-    [SerializeField] private Text _playerNameText;
-    [SerializeField] private Text _hitPointText;
+    [SerializeField] private TextMeshProUGUI _playerNameText;
+    [SerializeField] private TextMeshProUGUI _hitPointText;
 
     public override void OnStartServer()
     {
