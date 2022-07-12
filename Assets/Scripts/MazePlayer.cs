@@ -104,7 +104,6 @@ public class MazePlayer : NetworkBehaviour
         bulletObject.transform.position = shootPosition;
         
         NetworkServer.Spawn(bulletObject);
-        bulletObject.SetActive(false);
         Container.Instance.BulletShootPublisher.OnNext(new BulletShootMessage(
                 _netIdentity,
                 shootPosition,
@@ -112,18 +111,5 @@ public class MazePlayer : NetworkBehaviour
             ));
         // RpcShoot();
     }
-
-    [ClientRpc]
-    void RpcShoot()
-    {
-        GameObject bulletObject = Instantiate(_bullet, _launchPosition.transform);
-        bulletObject.transform.localPosition = new Vector3(0f, 0f, 0f);
-        bulletObject.transform.SetParent(null);
-        
-        Vector3 shootDirection = Vector3.Normalize(_launchPosition.transform.position - gameObject.transform.position);
-        Bullet bullet = bulletObject.GetComponent<Bullet>();
-        bullet.Shoot(_netIdentity, shootDirection);
-    }
-    
     
 }

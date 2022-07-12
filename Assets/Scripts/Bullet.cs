@@ -30,29 +30,12 @@ public class Bullet : NetworkBehaviour
         
             //寿命の設定
             Destroy(gameObject, _lifeTime);
-            gameObject.SetActive(true);
             this.UpdateAsObservable()
                 .Subscribe(_ =>
                 {
                     gameObject.transform.position += bulletShootMessage.ShootDirection * _speed * Time.deltaTime;
                 });
         });
-    }
-
-    public void Shoot(NetworkIdentity playerIdentity, Vector3 shootDirection)
-    {
-        //シューターの設定
-        _shooterIdentity = playerIdentity;
-        Debug.Log("shooter: " + _shooterIdentity.connectionToClient.connectionId);
-        
-        //寿命の設定
-        Destroy(gameObject, _lifeTime);
-
-        this.UpdateAsObservable()
-            .Subscribe(_ =>
-            {
-                gameObject.transform.position += shootDirection * _speed * Time.deltaTime;
-            });
     }
 
     [ServerCallback]
