@@ -18,7 +18,7 @@ public class GameManager : NetworkBehaviour
             
             //プレーヤー取得処理
             //MazePlayerを取得してHitPointを減らす処理が必要
-            GameObject playerObject = bulletHitMessage.ShooterIdentity.gameObject;
+            GameObject playerObject = bulletHitMessage.ShotIdentity.gameObject;
             MazePlayer mazePlayer = playerObject.GetComponent<MazePlayer>();
             if (mazePlayer != null)
             {
