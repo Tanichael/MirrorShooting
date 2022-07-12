@@ -30,7 +30,7 @@ public class Bullet : NetworkBehaviour
         
             //寿命の設定
             Destroy(gameObject, _lifeTime);
-
+            gameObject.SetActive(true);
             this.UpdateAsObservable()
                 .Subscribe(_ =>
                 {

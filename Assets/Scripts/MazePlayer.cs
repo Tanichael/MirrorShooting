@@ -104,6 +104,7 @@ public class MazePlayer : NetworkBehaviour
         bulletObject.transform.position = shootPosition;
         
         NetworkServer.Spawn(bulletObject);
+        bulletObject.SetActive(false);
         Container.Instance.BulletShootPublisher.OnNext(new BulletShootMessage(
                 _netIdentity,
                 shootPosition,
