@@ -10,20 +10,10 @@ using UniRx.Triggers;
 
 public class Bullet : NetworkBehaviour
 {
+    private IObserver<BulletHitMessage> _bulletHitSubject;
     private NetworkIdentity _shooterIdentity;
 
     private readonly float _lifeTime = 10f; //球の寿命
-
-    private Subject<BulletHitMessage> _bulletHit;
-
-    public IObservable<BulletHitMessage> OnBulletHit
-    {
-        get
-        {
-            return _bulletHit;
-        }
-    }
-    
     private readonly float _speed = 10f;
 
     public void Shoot(NetworkIdentity playerIdentity, Vector3 shootDirection)
@@ -64,6 +54,7 @@ public class Bullet : NetworkBehaviour
             _shooterIdentity,
             10
         ));
+        Destroy(gameObject);
     }
 }
 

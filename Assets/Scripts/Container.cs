@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UniRx;
+using Unity.Collections.LowLevel.Unsafe;
 
 //イベントの定義 Singletonとして動く
 public class Container : Singleton<Container>
@@ -27,6 +29,7 @@ public class Container : Singleton<Container>
 
     public Container()
     {
+        //コンストラクターで各Subjectのインスタンス作っておく
         _bulletHitMessageSubject = new Subject<BulletHitMessage>();
         
     }

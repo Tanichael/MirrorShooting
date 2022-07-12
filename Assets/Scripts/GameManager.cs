@@ -4,6 +4,8 @@ using UnityEngine;
 using Mirror;
 using UniRx;
 
+//基本サーバーで動かしたい処理をまとめておく
+//共通のイベント処理など
 public class GameManager : NetworkBehaviour
 {
     //サーバーで動かしたい処理を登録しておく
