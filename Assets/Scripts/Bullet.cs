@@ -47,12 +47,13 @@ public class Bullet : NetworkBehaviour
             NetworkIdentity shotIdentity = mazePlayer.netIdentity;
             if (shotIdentity == _shooterIdentity) return; //自爆はしない
             
-            // Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(
-            //     _shooter,
-            //     mazePlayer.connectionToClient.connectionId,
-            //     10
-            // ));
-            // Debug.Log(mazePlayer.gameObject.name);
+            Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(
+                _shooterIdentity,
+                _shooterIdentity,
+                10
+            ));
+            Destroy(gameObject);
+            return;
         }
         
         Container.Instance.BulletHitPublisher.OnNext(new BulletHitMessage(

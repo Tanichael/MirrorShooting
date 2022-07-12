@@ -23,6 +23,7 @@ public class GameManager : NetworkBehaviour
             if (mazePlayer != null)
             {
                 mazePlayer.HitPoint -= bulletHitMessage.Damage;
+                Debug.Log("Id: " + bulletHitMessage.ShotIdentity.connectionToClient.connectionId +  ", HitPoint: " + mazePlayer.HitPoint);
             }
             
             //UI表示処理 誰が誰を倒した、みたいなの
