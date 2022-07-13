@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using Mirror.Discovery;
 using Zenject;
 using UniRx;
 using UniRx.Triggers;

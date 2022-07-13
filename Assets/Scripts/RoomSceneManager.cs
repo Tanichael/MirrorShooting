@@ -6,7 +6,6 @@ using Mirror;
 
 public class RoomSceneManager : MonoBehaviour
 {
-    [SerializeField] private NetworkManager _networkManager;
     [SerializeField] private Button _createButton;
     [SerializeField] private Button _joinButton;
 
@@ -14,7 +13,7 @@ public class RoomSceneManager : MonoBehaviour
     {   
         _createButton.onClick.AddListener(() =>
         {
-            _networkManager.StartHost();
+            NetworkManager.singleton.StartHost();
         });
         
         _joinButton.onClick.AddListener(() =>

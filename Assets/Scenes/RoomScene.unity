@@ -294,6 +294,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &390227087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390227084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6e55fca1f4e4844593a3dd65a3ecb39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Channels: 0200000001000000
+  Timeout: 25
+  AllowSteamRelay: 1
+  UseNextGenSteamNetworking: 1
 --- !u!1 &599470078
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +486,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3976107277799664999, guid: 3586ad84e12dd7248a55089841e82359, type: 3}
+      propertyPath: transport
+      value: 
+      objectReference: {fileID: 390227087}
+    - target: {fileID: 3976107277799664999, guid: 3586ad84e12dd7248a55089841e82359, type: 3}
       propertyPath: onlineScene
       value: Assets/Scenes/SampleScene.unity
       objectReference: {fileID: 0}
@@ -527,18 +547,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3976107277799665001, guid: 3586ad84e12dd7248a55089841e82359, type: 3}
+    - {fileID: 3976107277799665000, guid: 3586ad84e12dd7248a55089841e82359, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3586ad84e12dd7248a55089841e82359, type: 3}
---- !u!114 &834526149 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3976107277799664999, guid: 3586ad84e12dd7248a55089841e82359, type: 3}
-  m_PrefabInstance: {fileID: 834526148}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 390227084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aab4c8111b7c411b9b92cf3dbc5bd4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1109311006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,7 +1049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88036990cd38bf469c6dccbf4cb411c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _networkManager: {fileID: 834526149}
   _createButton: {fileID: 157092343}
   _joinButton: {fileID: 1248962766}
 --- !u!1 &2102638388
@@ -1068,7 +1077,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102638388}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 599470082}
