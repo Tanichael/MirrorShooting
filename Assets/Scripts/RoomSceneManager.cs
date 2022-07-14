@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using HeathenEngineering.SteamworksIntegration;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
 using Steamworks;
+using Zenject.Asteroids;
 
 public class RoomSceneManager : MonoBehaviour
 {
@@ -12,7 +15,8 @@ public class RoomSceneManager : MonoBehaviour
     [SerializeField] private Button _joinButton;
 
     public void Start()
-    {   
+    {
+        DontDestroyOnLoad(this);
         _createButton.onClick.AddListener(() =>
         {
             NetworkManager.singleton.StartHost();
@@ -44,6 +48,19 @@ public class RoomSceneManager : MonoBehaviour
         {
             Debug.Log("SteamAPI initialized");
         }
-        
+
+        Debug.Log(SteamSettings.Server.autoInitialize);
+        SteamSettings.Server.LogOn();
+        Debug.Log(SteamSettings.Server.LoggedOn);
+        Debug.Log(SteamSettings.Server.serverId.m_SteamID);
+
+    }
+
+    public void Update()
+    {
+        if (SteamSettings.Server.LoggedOn)
+        {
+            Debug.Log(SteamSettings.Server.serverId.m_SteamID);
+        }
     }
 }
